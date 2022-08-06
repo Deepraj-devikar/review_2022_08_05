@@ -5,26 +5,33 @@ simulator () {
 	echo $die
 }
 
-won=$(simulator)
-wonArr=( $(simulator) $(simulator) $(simulator) $(simulator) $(simulator) )
+i=0
 
+#counters for head and tails won
 headWon=0
 tailWon=0
-for v in ${wonArr[@]}
+
+# loop will run upto 42 time
+while [ $i -lt 42 ]
 do
-	if [ $v -eq 0 ]
+	if [ $(simulator) -eq 0 ]
 	then
 		headWon=$(($headWon+1))
 	else
 		tailWon=$(($tailWon+1))
 	fi
+	i=$(($i+1))
 done
-echo "in array head won $headWon times and tail won $tailWon times";
 
-if [ $won -eq 0 ]
+if [ $headWon -gt 21 ]
 then
-	echo "head won";
+	points=$(($headWon-$tailWon))
+	echo "head won by $points points";
+elif [ $tailWon -gt 21 ]
+then
+	points=$(($tailWon-$headWon))
+	echo "tail won by $points points";
 else
-	echo "tails won";
+	echo "it is tie";
 fi
 
