@@ -5,6 +5,30 @@ simulator () {
 	echo $die
 }
 
+level2 () {
+	headWon=0
+	tailWon=0
+	while [ 1 -eq 1 ]
+	do
+		if [ $(simulator) -eq 0 ]
+		then
+			headWon=$(($headWon+1))
+		else
+			tailWon=$(($tailWon+1))
+		fi
+		
+		if [ $(($headWon-$tailWon)) -ge 2 ]
+		then
+			echo "head Won";
+			break
+		elif [ $(($tailWon-$headWon)) -ge 2 ]
+		then
+			echo "tail Won";
+			break
+		fi
+	done
+}
+
 i=0
 
 #counters for head and tails won
@@ -32,7 +56,5 @@ then
 	points=$(($tailWon-$headWon))
 	echo "tail won by $points points";
 else
-	echo "it is tie";
+	echo "it is tie -> $(level2) in level 2";
 fi
-
-#checking uc4
