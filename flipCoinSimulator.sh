@@ -6,4 +6,9 @@ simulator () {
 }
 
 won=$(simulator)
-echo $won
+if [ $won -eq 0 ]
+then
+	echo "head won";
+else
+	echo "tails won";
+fi
