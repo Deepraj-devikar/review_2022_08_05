@@ -19,7 +19,9 @@ function calculateWorkingHour() {
 perHourSalary=20;
 totalWorkingHour=0;
 day=1;
+totalSalary=0
 
+declare -A dailySalaries
 while [[ $day -le 20 && $totalWorkingHour -lt 40 ]]
 do
 	wHour=$(calculateWorkingHour $((RANDOM%3)));
@@ -30,14 +32,28 @@ do
 		break;
 	fi
 	salary=$(($perHourSalary * $wHour));
-	workingHours[$(($day-1))]=$wHour
-	salaries[$(($day-1))]=$salary
+	totalSalary=$(($totalSalary+$salary))
+	dailySalaries["day $day"]="$salary \t $totalSalary"
 	((day++));
 done
 echo "Employee has earned salaries in a month : ";
 
-echo -e "salary \t working hour"
-for (( i=0; i<${#salaries[@]}; i++ ))
+echo -e "day \t salary \t total salary"
+
+##Approch 2 to print
+for (( i=1; i<22; i++ ))
 do
-	echo -e "${salaries[$i]} $ \t ${workingHours[$i]} hr"
+	if [ -v dailySalaries["day $i"] ]
+	then
+		echo -e "day $i \t ${dailySalaries["day $i"]}"
+	else
+		break
+	fi
 done
+
+##Approch 1 to print
+#for dayNum in "${!dailySalaries[@]}"
+#do
+#	echo -e "$dayNum \t ${dailySalaries[$dayNum]}"
+#done
+
